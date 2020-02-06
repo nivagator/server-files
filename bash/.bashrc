@@ -137,6 +137,6 @@ fi
 #
 # #alias python='/usr/bin/python3'
 # 
-## Install Ruby Gems to ~/gems
+## Install Ruby Gems to ~/gems - added during Jekyll setup
 # export GEM_HOME=$HOME/gems
 # export PATH=$HOME/gems/bin:$PATH
