@@ -1,0 +1,51 @@
+#!/bin/bash
+source ~/config/twitter.config
+
+# PATH modification needed for http_post and oauth_sign
+export PATH=$PATH:/usr/local/bin
+
+toplevel_path=`git rev-parse --show-toplevel`
+toplevel_dir=`basename "$toplevel_path"`
+
+giturl="https://github.com/"$twacct"/"
+repourl=`git config --local --get remote.origin.url`
+
+if [ ! -z "$repourl" ]
+then
+  repo=${repourl/$giturl/}
+  repo=${repo/.git/}
+  if [[ $repourl == *"github.com"* ]]
+  then
+    repourl=$repourl' #github'
+    githash=" #github"
+  else
+    githash=""
+  fi
+else
+  repo="local"
+fi
+
+branch=`git rev-parse --abbrev-ref HEAD`
+subject=`git log --pretty=format:%s -n1`
+hashtags="#code #commit$githash"
+tweet='['$repo']:['$branch']: '$subject' '$hashtags   #' '$repourl
+    
+# truncate tweets that are longer than 280 characters
+if [ ${#tweet} -gt 280 ]
+  then
+    tweet_trunc=$(echo $tweet | cut -c1-277)
+    tweet=${tweet_trunc}...
+fi
+echo $tweet
+      
+consumer_key=$consumerkey 
+consumer_secret=$consumersecret 
+access_token=$accesstoken 
+access_secret=$accesstokensecret 
+url="http://api.twitter.com/1.1/statuses/update.json"
+ 
+ http_post -h Authorization "$(oauth_sign \
+ $consumer_key $consumer_secret \
+ $access_token $access_secret \
+ POST "$url" status="$tweet")" \
+      "$url" status="$tweet"
