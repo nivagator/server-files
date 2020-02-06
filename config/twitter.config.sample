@@ -1,0 +1,6 @@
+## Template file to configure twitter api credentials
+twacct={YOUR-TWITTER-USERNAME}
+consumerkey={YOUR-CONSUMER-KEY}
+consumersecret={YOUR-CONSUMER-TOKEN}
+accesstoken={YOUR-ACCESS-TOKEN}
+accesstokensecret={YOUR-ACCESS-SECRET}
