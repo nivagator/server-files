@@ -12,8 +12,7 @@ repourl=`git config --local --get remote.origin.url`
 
 if [ ! -z "$repourl" ]
 then
-  repo=${repourl/$giturl/}
-  repo=${repo/.git/}
+  repo=$(basename "$repourl" ".${repourl##*.}")
   if [[ $repourl == *"github.com"* ]]
   then
     repourl=$repourl' #github'
